@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Beans;
+package beans;
 
-import com.mycompany.jacartavisa.business.UtilisateurEntrepriseBean;
+import Business.UtilisateurEntrepriseBean;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -13,11 +13,10 @@ import jakarta.inject.Named;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-
+import jakarta.validation.constraints.Size;;
 /**
  *
- * @author HP
+ * @author John Musans
  */
 @Named(value="utilisateurBean")
 @RequestScoped
@@ -33,12 +32,6 @@ public class UtilisateurBean {
     @Email(message = "L'email doit être valide")
     private String email;
     
-    @NotBlank(message = "Le mot de passe est obligatoire")
-    @Size(min = 8, message = "Le mot de passe doit contenir au moins 8 caractères")
-     @Pattern(
-        regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$",
-        message = "Le mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial"
-    )
     private String password;
     
     @NotBlank(message = "Veuillez confirmer votre mot de passe")

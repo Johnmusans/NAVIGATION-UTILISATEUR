@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="jakarta.faces.html">
     <head>
-        <title>Home</title>
+        <title>Visite</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -22,11 +22,16 @@
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 text-align: center;
-                width: 300px;
+                width: 350px;
             }
 
             h1 {
                 color: #333;
+                margin-bottom: 10px;
+            }
+
+            h2 {
+                color: #666;
                 margin-bottom: 20px;
             }
 
@@ -39,7 +44,6 @@
                 font-size: 16px;
                 cursor: pointer;
                 width: 100%;
-                margin-bottom: 10px;
                 transition: background 0.3s;
             }
 
@@ -48,14 +52,14 @@
             }
         </style>
     </head>
+    
     <body>
         <div class="container">
-            <h1>Home</h1>
+            <h1>Visitez-nous</h1>
+            <h2>Karibu kwetu</h2>
             <h:form>
-                <h:commandButton value="Ajouter" action="#{navigationController.lieu()}" styleClass="btn"/>
-                <h:commandButton value="Visiter" action="#{navigationController.visiter()}" styleClass="btn"/>
-                <h:commandButton value="À propos" action="#{navigationController.voirApropos()}" styleClass="btn"/>
-            </h:form>    
+               <h:commandButton value="Retour" action="#{navigationController.retour()}" styleClass="btn"/>
+            </h:form>   
         </div>
     </body>
 </html>

@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 /**
  *
- * @author DELL
+ * @author HP
  */
 @Entity
 @Table(name="utilisateur")
@@ -77,6 +77,11 @@ public class Utilisateur {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public Long getId() {
+        return id;
+    }
+    
     
       
       

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 /**
  *
- * @author john Musans
+ * @author John musans
  */
 @Named(value = "navigationController")
 @RequestScoped
@@ -47,6 +47,15 @@ public class NavigationBean {
         try{
             FacesContext.getCurrentInstance().getExternalContext()
                     .redirect("/home.xhtml");
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+        
+    public void guide(){
+        try{
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .redirect("pages/guide.xhtml");
         } catch(IOException e){
             e.printStackTrace();
         }

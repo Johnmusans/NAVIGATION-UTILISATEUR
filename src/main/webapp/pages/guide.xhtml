@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>Facelet Title</title>
+        <!-- Lien vers Tailwind CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    </h:head>
+    <h:body class="bg-gray-100">
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-6">Sélectionner un lieu :</h1>
+            <h:form>
+                <div class="mb-4">
+                    <h:selectOneMenu value="#{lieuBean.selectedLieu}" class="w-full p-2 border border-gray-300 rounded-lg">
+                        <f:selectItems value="#{lieuBean.lieux}" var="lieu"
+                                       itemValue="#{lieu.id}" itemLabel="#{lieu.nom}"/>
+                        <f:ajax listener="#{lieuBean.updateWeatherMessage}" render="weather"/>
+                    </h:selectOneMenu>
+                </div>
+            </h:form>
+
+            <!-- Affichage de la météo -->
+            <div class="mb-6">
+                <h:outputText id="weather" value="#{lieuBean.weatherMessage}" class="text-lg"/>
+                <h:outputText id="weatherm" value="il fait beau aujourd'hui, Agreable pour le sport ! " class="text-lg"/>
+                <br/>
+                <!-- Bouton "Visiter" -->
+                <h:form>
+                    <h:commandButton value="Visiter" action="#{formulaireVisiteBean.afficherFormulaireVisite}" 
+                                     class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"/>
+                </h:form>
+            </div>
+        </div>
+        
+        <!-- Formulaire de visite -->
+        <div class="container mx-auto px-4 py-8">
+            <h:form rendered="#{formulaireVisiteBean.afficherFormulaireVisite}" class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-6">Formulaire de Visite</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Utilisateur -->
+                    <div class="mb-4">
+                        <label for="utilisateur" class="block text-gray-700 font-medium">Utilisateur :</label>
+                        <h:inputText id="utilisateur" value="#{formulaireVisiteBean.nom}" type="text" required="true" 
+                                     class="w-full p-2 border border-gray-300 rounded-lg" readonly="true"/>
+                    </div>
+                    <!-- Date de visite -->
+                    <div class="mb-4">
+                        <label for="dateVisite" class="block text-gray-700 font-medium">Date de visite :</label>
+                        <h:inputText id="dateVisite" value="#{formulaireVisiteBean.dateVisite}" required="true" 
+                                     class="w-full p-2 border border-gray-300 rounded-lg">
+                            <f:converter converterId="localDateTimeConverter"/>
+                        </h:inputText>
+                    </div>
+                    <!-- Temps passé -->
+                    <div class="mb-4">
+                        <label for="tempsPasse" class="block text-gray-700 font-medium">Temps passé :</label>
+                        <h:inputText id="tempsPasse" value="#{formulaireVisiteBean.tempsPasse}"
+                                     required="true" class="w-full p-2 border border-gray-300 rounded-lg" type="number"/>
+                    </div>
+                    <!-- Observations -->
+                    <div class="mb-4">
+                        <label for="observations" class="block text-gray-700 font-medium">Observations :</label>
+                        <h:inputTextarea id="observations" value="#{formulaireVisiteBean.observations}"
+                                         class="w-full p-2 border border-gray-300 rounded-lg"/>
+                    </div>
+                    <!-- Dépenses -->
+                    <div class="mb-4">
+                        <label for="depenses" class="block text-gray-700 font-medium">Dépenses :</label>
+                        <h:inputText id="depenses" value="#{formulaireVisiteBean.depenses}" 
+                                     class="w-full p-2 border border-gray-300 rounded-lg" type="number"/>
+                    </div>
+                </div>
+                <!-- Bouton pour sauvegarder la visite -->
+                <div class="mt-6">
+                    <h:commandButton value="Enregistrer" action="#{formulaireVisiteBean.sauvegarderVisite}"
+                                     class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"/>
+                </div>
+            </h:form>
+        </div>
+        
+        <!-- Historique des visites -->
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-6">Historique des Visites</h1>
+            <h:form>
+                <h:commandButton value="Charger les visites" action="#{formulaireVisiteBean.chargerVisites}" 
+                                 class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"/>
+            </h:form>
+
+            <div class="mt-6 overflow-x-auto bg-white rounded-lg shadow-md">
+                <h:dataTable value="#{formulaireVisiteBean.visitesUtilisateur}" var="visite" 
+                             class="min-w-full divide-y divide-gray-200">
+                    <h:column>
+                        <f:facet name="header" class="bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Visite</f:facet>
+                        <div class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{visite.id}</div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lieu</f:facet>
+                        <div class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{visite.lieu.nom}</div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</f:facet>
+                        <div class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{visite.dateVisite}</div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temps Passé (min)</f:facet>
+                        <div class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{visite.tempsPasse}</div>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header" class="bg-gray-100 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dépenses (€)</f:facet>
+                        <div class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{visite.depenses}</div>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </div>
+    </h:body>
+</html>

@@ -6,7 +6,7 @@ package Business;
 
 /**
  *
- * @author John Musans
+ * @author John musans
  */
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -17,12 +17,10 @@ import java.io.IOException;
 @WebFilter("/pages/*")
 public class SessionControlFilter implements Filter {
    
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // Initialisation du filtre
     }
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -39,7 +37,6 @@ public class SessionControlFilter implements Filter {
         }
     }
 
-    @Override
     public void destroy() {
         // Nettoyage du filtre
     }
